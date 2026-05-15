@@ -148,7 +148,7 @@ core-auth/
 ⚙️ Installation & Setup
 
 1. Clone Repository
-git clone <repo-url>
+git clone <https://github.com/Muhammad-Muneer-Hussain/core-auth>
 cd core-auth
 
 2. Create Virtual Environment
