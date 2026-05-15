@@ -9,7 +9,7 @@ from app.db.session import get_db
 from app.models.user import User
 from app.redis.client import is_token_blacklisted
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/login") #auth/
 
 async def get_current_user(
     token: Annotated[str, Depends(oauth2_scheme)],
@@ -32,9 +32,7 @@ async def get_current_user(
     except jwt.InvalidTokenError:
         raise credentials_exception
         
-    # Zero Trust: Check Blacklist
-    # The signature part of the token (last part) can be used as unique ID for blacklisting
-    # For full safety, we can just use the whole token as the key
+
     if await is_token_blacklisted(token):
         raise credentials_exception
 

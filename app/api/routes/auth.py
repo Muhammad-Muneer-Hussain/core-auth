@@ -1,5 +1,7 @@
 import jwt
 from datetime import datetime, timezone
+from typing import Annotated 
+from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer 
 from fastapi import APIRouter, Depends, HTTPException, status, Request
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
@@ -35,13 +37,19 @@ async def register(user_in: UserCreate, db: AsyncSession = Depends(get_db)):
     await db.refresh(db_user)
     return db_user
 
+
+
 @router.post("/login", response_model=Token)
-async def login(user_in: UserCreate, db: AsyncSession = Depends(get_db)):
-    stmt = select(User).where(User.email == user_in.email)
+async def login(
+    form_data: Annotated[OAuth2PasswordRequestForm, Depends()], 
+    db: AsyncSession = Depends(get_db)
+):
+    
+    stmt = select(User).where(User.email == form_data.username)
     result = await db.execute(stmt)
     user = result.scalar_one_or_none()
     
-    if not user or not verify_password(user_in.password, user.hashed_password):
+    if not user or not verify_password(form_data.password, user.hashed_password):
         raise HTTPException(status_code=400, detail="Incorrect email or password")
         
     return Token(
