@@ -4,3 +4,4 @@ pg_data/
 pg_bin/
 redis_bin/
 logfile
+dump.rdb

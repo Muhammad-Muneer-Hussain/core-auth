@@ -162,4 +162,55 @@ source venv/bin/activate
 4. Install Dependencies
 pip install -r requirements.txt
 
-pip install -r requirements.txt
+5. Environment Variables
+Create a .env file in the root directory:
+DATABASE_URL=postgresql+asyncpg://postgres:password@localhost/coreauth
+REDIS_URL=redis://localhost:6379
+
+ACCESS_SECRET=your_access_secret
+REFRESH_SECRET=your_refresh_secret
+
+ALGORITHM=HS256
+ACCESS_TOKEN_EXPIRE_MINUTES=15
+REFRESH_TOKEN_EXPIRE_DAYS=7
+
+6. Run Application
+uvicorn app.main:app --reload
+Swagger Documentation: Open http://127.0.0.1:8000/docs
+
+🔄 Authentication Flow
+Register User: POST /auth/registerLogin User: POST /auth/login $\rightarrow$ Returns Access & Refresh Token.
+Authorize Swagger: Use the Authorize button in Swagger UI.
+Access Protected Route: GET /users/me
+Refresh Session: POST /auth/refresh
+Logout User: POST /auth/logout
+
+Zero-Trust Validation: Attempting to reuse a blacklisted token returns 401 Unauthorized.
+
+🛡️ Security & Quality Gates
+GitHub Actions CI Pipeline
+The project includes automated CI verification with the following stages:
+
+Environment spawn
+
+PostgreSQL & Redis startup
+
+Ruff lint validation
+
+Bandit security scanning
+
+Async integration testing
+
+Quality Commands
+Run Tests: pytest
+
+Linting Check: ruff check .
+
+Security Audit: bandit -r app
+
+🧑‍💻 Author
+Muhammad Muneer Hussain
+
+📄 License
+This project is developed for educational, enterprise backend engineering, and portfolio demonstration purposes.
+
