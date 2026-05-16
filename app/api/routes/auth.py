@@ -1,11 +1,11 @@
 import jwt
 from datetime import datetime, timezone
 from typing import Annotated 
-from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer 
-from fastapi import APIRouter, Depends, HTTPException, status, Request
+from fastapi.security import OAuth2PasswordRequestForm 
+from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
-from app.api.deps import get_db, get_current_user, oauth2_scheme
+from app.api.deps import get_db, oauth2_scheme
 from app.models.user import User
 from app.schemas.user import UserCreate, UserResponse, StandardResponse
 from app.schemas.token import Token, TokenRefresh

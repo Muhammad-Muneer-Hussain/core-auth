@@ -1,5 +1,4 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
-from pydantic import PostgresDsn, RedisDsn
 
 class Settings(BaseSettings):
     PROJECT_NAME: str = "CORE-AUTH"
