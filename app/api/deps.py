@@ -9,7 +9,7 @@ from app.db.session import get_db
 from app.models.user import User
 from app.redis.client import is_token_blacklisted
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/login") #auth/
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/login") 
 
 async def get_current_user(
     token: Annotated[str, Depends(oauth2_scheme)],
